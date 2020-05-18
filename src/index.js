@@ -2,32 +2,32 @@ import { observable, computed, autorun } from 'mobx';
 import cobx from 'cobx';
 
 class TodoItem {
-	@observable body = "";
+  @observable body = "";
   @observable completed = false;
   @computed get fullName() {
-  	return this.firstName + " " + this.lastName;
+    return this.firstName + " " + this.lastName;
   }
 }
 
 class TodoListElement extends cobx.Element {
-	@observable todos = [];
+  @observable todos = [];
   @observable newItemText = "";
   @computed get itemsCount() {
-  	let remaining = this.todos.filter((t) => {
-    	return !t.completed
+    let remaining = this.todos.filter((t) => {
+      return !t.completed
     }).length;
     return `${remaining} items left`
   }
   
-	constructor() {
-  	super();
+  constructor() {
+    super();
     let item = new TodoItem();
     item.body = "Clean up room";
     this.todos.push(item);
   }
   
   addItem() {
-  	let item = new TodoItem();
+    let item = new TodoItem();
     item.body = this.newItemText;
     this.todos.push(item);
     this.newItemText = "";
@@ -54,10 +54,10 @@ class TodoListElement extends cobx.Element {
 customElements.define('todo-list', TodoListElement);
 
 class TodoItemElement extends cobx.Element {
-	@observable item = null;
+  @observable item = null;
 
-	constructor() {
-  	super();
+  constructor() {
+    super();
     this.testAttr = 5;
     // evaluate item with context
   }
