@@ -3,6 +3,13 @@ import cobx from 'cobx';
 import TodoItem from './todo_item';
 
 class TestElement extends cobx.Element {
+  @observable item = null;
+
+  templateHTML() {
+    return `
+      <span @text="this.item.body"></span>
+    `
+  }
 
 }
 customElements.define('test-element', TestElement);

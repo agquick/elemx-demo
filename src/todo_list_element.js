@@ -48,6 +48,7 @@ class TodoListElement extends cobx.Element {
       <header>
         <h1>cobx todos</h1>
       </header>
+
       <section class="main">
         <input class="new-todo" @sync="this.newItemText" @sync-event="keyup" @on-return="this.addItem()" placeholder="What do you need to get done?"/>
 
