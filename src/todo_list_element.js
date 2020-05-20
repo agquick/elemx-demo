@@ -51,11 +51,9 @@ class TodoListElement extends cobx.Element {
       <section class="main">
         <input class="new-todo" @sync="this.newItemText" @sync-event="keyup" @on-return="this.addItem()" placeholder="What do you need to get done?"/>
 
-        <div @each="this.todos" @as="item">
-          <template>
-            <todo-item :item="context.item" @on-remove="this.handleRemoveItem"></todo-item>
-          </template>
-        </div>
+        <template @each="this.todos" @as="item">
+          <todo-item :item="context.item" @on-remove="this.handleRemoveItem"></todo-item>
+        </template>
 
         <footer>
           <span @text="this.itemsCount"></span>
