@@ -7,6 +7,12 @@ module.exports = {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  devServer: {
+    contentBase: './dist',
+    host: '0.0.0.0',
+    port: 3040,
+    disableHostCheck: true
+  },
   module: {
     rules: [
       {

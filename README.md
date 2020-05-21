@@ -4,3 +4,4 @@
 
 - Add styling
 - Remove logging
+- Host and link to github

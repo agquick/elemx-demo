@@ -2,12 +2,16 @@ import { observable, computed, autorun } from 'mobx';
 import cobx from 'cobx';
 import TodoItem from './todo_item';
 
+import 'weightless/button'
+import 'weightless/icon'
+import 'weightless/checkbox'
+
 class TestElement extends cobx.Element {
-  @observable item = null;
+  @observable text = null;
 
   templateHTML() {
     return `
-      <span @text="this.item.body"></span>
+      <span @text="this.text"></span>
     `
   }
 
@@ -16,17 +20,18 @@ customElements.define('test-element', TestElement);
 
 class TodoItemElement extends cobx.Element {
   @observable item = null;
-  @observable is_editing = false;
-  @observable edited_body = '';
+  @observable isEditing = false;
+  @observable editedBody = '';
 
   startEditing() {
-    this.is_editing = true;
-    //this.edited_body = '';
+    this.isEditing = true;
+    this.editedBody = this.item.body;
     console.log("Starting editing.");
   }
 
   stopEditing() {
-    this.is_editing = false;
+    this.isEditing = false;
+    this.item.body = this.editedBody;
   }
 
   removeItem() {
@@ -35,51 +40,58 @@ class TodoItemElement extends cobx.Element {
 
   templateHTML() {
     return `
-      <div @class="{completed: this.item.completed}">
-        <input type="checkbox" class="toggle" @sync="this.item.completed" style="margin-right: 5px;"/>
-        <label @text="this.item.body" @click="this.startEditing()"></label>
-        <button class="remove" @click="this.removeItem()"></button>
+      <div class="wrapper" @class="{completed: this.item.completed}">
+        <wl-checkbox class="toggle" @sync="this.item.completed" style="--checkbox-size=20px;"></wl-checkbox>
+        <template @if="!this.isEditing">
+          <label @text="this.item.body" @click="this.startEditing()"></label>
+        </template>
+        <template @if="this.isEditing">
+          <wl-textfield class="edited-body" @sync="this.editedBody" @on-focusout="this.stopEditing()" @on-return="this.stopEditing()"></wl-textfield>
+        </template>
+        <wl-button class="remove" fab @click="this.removeItem()">
+          <wl-icon>delete</wl-icon>
+        </wl-button>
       </div>
+      <slot></slot>
     `
   }
 
   templateCSS() {
     return `
       :host {
-        position: relative;
         font-size: 24px;
         border-bottom: 1px solid #ededed;
         display: block;
       }
 
       :host(:hover) .remove {
-        display: inherit;
+        visibility: visible;
       }
+
+      .wrapper {
+        display: flex;
+        padding: 10px 15px;
+        align-items: center;
+      }
+
       .toggle {
-        opacity: 0;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        bottom: 0px;
-        width: 40px;
-        height: 100%;
-      }
-
-      .toggle + label {
-        background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23ededed%22%20stroke-width%3D%223%22/%3E%3C/svg%3E');
-        background-repeat: no-repeat;
-        background-position: center left;
-      }
-
-      .toggle:checked + label {
-        background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23bddad5%22%20stroke-width%3D%223%22/%3E%3Cpath%20fill%3D%22%235dc2af%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22/%3E%3C/svg%3E')
+        margin-right: 20px;
       }
 
       label {
-        padding: 15px 15px 15px 60px;
         line-height: 1.2;
         display: block;
         transition: color 0.4s;
+        flex: 1;
+      }
+
+      .edited-body {
+        flex: 1;
+      }
+
+      .edited-body input {
+        font-family: inherit;
+        font-weight: inherit;
       }
 
       .completed label {
@@ -88,20 +100,7 @@ class TodoItemElement extends cobx.Element {
       }
 
       .remove {
-        display: none;
-        position: absolute;
-        top: 0px;
-        right: 10px;
-        bottom: 0px;
-        width: 40px;
-        margin: auto 0;
-        font-size: 30px;
-        color: #cc9a9a;
-        background: none;
-        border: none;
-      }
-      .remove:after {
-        content: '×';
+        visibility: hidden;
       }
     `
   }
