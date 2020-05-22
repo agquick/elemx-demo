@@ -1,5 +1,5 @@
 {
-  "name": "cobx-demo",
+  "name": "elemx-demo",
   "version": "1.0.0",
   "description": "",
   "private": "true",
@@ -20,7 +20,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "cobx.js": "file:../../lib/cobx.js",
+    "elemx": "file:../../lib/elemx.js",
     "mobx": "^5.15.4",
     "webpack-dev-server": "^3.11.0",
     "weightless": "0.0.37"

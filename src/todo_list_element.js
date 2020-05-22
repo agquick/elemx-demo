@@ -1,5 +1,5 @@
 import { observable, computed, autorun } from 'mobx';
-import cobx from 'cobx';
+import { ReactiveElement } from 'elemx';
 import TodoItemElement from './todo_item_element';
 import TodoItem from './todo_item';
 
@@ -9,7 +9,7 @@ import 'weightless/button'
 let newItem = new TodoItem();
 newItem.body = "Clean up room";
 
-class TodoListElement extends cobx.Element {
+class TodoListElement extends ReactiveElement {
   @observable todos = [newItem];
   @observable newItemText = "";
   @observable filter = 'all';
@@ -69,7 +69,7 @@ class TodoListElement extends cobx.Element {
   templateHTML() {
     return `
       <header>
-        <h1>cobx todos</h1>
+        <h1>ElemX Todos</h1>
       </header>
 
       <section class="main">
@@ -109,7 +109,7 @@ class TodoListElement extends cobx.Element {
       }
       h1 {
         width: 100%;
-        font-size: 100px;
+        font-size: 80px;
         font-weight: 100;
         text-align: center;
         color: rgba(175, 47, 47, 0.15);

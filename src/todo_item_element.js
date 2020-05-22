@@ -1,12 +1,12 @@
 import { observable, computed, autorun } from 'mobx';
-import cobx from 'cobx';
+import { ReactiveElement } from 'elemx';
 import TodoItem from './todo_item';
 
 import 'weightless/button'
 import 'weightless/icon'
 import 'weightless/checkbox'
 
-class TestElement extends cobx.Element {
+class TestElement extends ReactiveElement {
   @observable text = null;
 
   templateHTML() {
@@ -18,7 +18,7 @@ class TestElement extends cobx.Element {
 }
 customElements.define('test-element', TestElement);
 
-class TodoItemElement extends cobx.Element {
+class TodoItemElement extends ReactiveElement {
   @observable item = null;
   @observable isEditing = false;
   @observable editedBody = '';
