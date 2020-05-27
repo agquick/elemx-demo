@@ -20,7 +20,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "elemx": "file:../../lib/elemx.js",
+    "elemx": "^0.2.2",
     "mobx": "^5.15.4",
     "webpack-dev-server": "^3.11.0",
     "weightless": "0.0.37"

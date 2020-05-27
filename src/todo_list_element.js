@@ -83,7 +83,7 @@ class TodoListElement extends ReactiveElement {
 
         <footer>
           <div class="count">
-            <span @text="this.itemsCount"></span>
+            {{ this.itemsCount }}
           </div>
           <div class="filters">
             <wl-button flat inverted :outlined="this.filter=='all'" @click="this.filter='all'">All</wl-button>
